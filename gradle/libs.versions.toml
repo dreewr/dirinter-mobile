@@ -5,12 +5,15 @@ navigationVersion = "2.5.3"
 lifecycleVersion = "2.5.1"
 coroutinesVersion = "1.6.4"
 retrofitVersion = "2.8.1"
-kotlinVersion = "1.8.10"
-androidGradleVersion = "8.1.1"
+kotlinVersion = "1.8.20"
+androidGradleVersion = "8.0.2"
 mockkVersion = "1.13.4"
 robolectricVersion = "4.9.2"
 assertJVersion = "3.22.0"
 androidJUnitVersion = "1.1.5"
+daggerVersion = "2.51"
+javaxAnnotationVersion = "1.0"
+javaxInjectVersion = "1"
 
 [libraries]
 
@@ -38,6 +41,9 @@ coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-androi
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 retrofit2-converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
 
+javaxAnnotation = { module = "javax.annotation:jsr250-api", version.ref = "javaxAnnotationVersion" }
+javaxInject = { module = "javax.inject:javax.inject", version.ref = "javaxInjectVersion" }
+
 okhttp3-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version = "4.9.0" }
 
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
@@ -59,6 +65,11 @@ android-play-auth = { module = "com.google.android.gms:play-services-auth", vers
 android-material = { module = "com.google.android.material:material", version = "1.6.0" }
 android-flexbox = { module = "com.google.android:flexbox", version = "2.0.1" }
 
+
+#novos
+dagger = { module = "com.google.dagger:dagger", version.ref = "daggerVersion" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "daggerVersion" }
+
 [bundles]
 
 play = ["android-play-maps", "android-play-review", "android-play-auth"]
@@ -68,6 +79,8 @@ coroutines = ["coroutines-core", "coroutines-android"]
 retrofit2 = ["retrofit2", "retrofit2-converter"]
 navigation = ["navigation-fragment", "navigation-ui"]
 androidx-design = ["androidx-constraintLayout", "androidx-vectorDrawable"]
+dagger = ["dagger", "dagger-compiler"]
+javax = ["javaxAnnotation", "javaxInject"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradleVersion" }

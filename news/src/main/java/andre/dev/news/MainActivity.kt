@@ -11,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import andre.dev.news.ui.theme.DerintMobileTheme
+import andre.dev.presentation.NewsViewModel
+import andre.dev.ui.NewsScreen
+import androidx.compose.runtime.ComposeCompilerApi
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,12 +25,21 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    Facade()
                 }
             }
         }
     }
 }
+
+
+@Composable
+fun Facade(){
+    NewsScreen(NewsModuleInitializer.getNewsComponent().getViewModelProviderFactory().create(NewsViewModel::class.java))
+}
+
+
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
@@ -44,3 +56,5 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+

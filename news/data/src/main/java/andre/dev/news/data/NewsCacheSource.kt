@@ -1,4 +1,3 @@
 package andre.dev.news.data
 
-class MyClass {
-}
+interface NewsCacheSource
