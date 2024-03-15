@@ -1,5 +1,7 @@
 package andre.dev.news.domain
 
+import andre.dev.news.domain.model.Article
+
 interface NewsRepository {
-    fun doSomething()
+    suspend fun doSomething(): List<Article>
 }

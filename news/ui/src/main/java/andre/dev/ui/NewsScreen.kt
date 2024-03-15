@@ -14,5 +14,9 @@ fun NewsScreen(viewModel: NewsViewModel) {
 //    // This is just an example, ensure your context is correctly cast to FragmentActivity
 //    val context = LocalContext.current
 //
-    Text("text")
+    Text("leeeeeee")
+
+    viewModel.doSomething()
+
+
 }

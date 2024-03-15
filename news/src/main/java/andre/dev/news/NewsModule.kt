@@ -7,6 +7,8 @@ import andre.dev.news.data.NewsRepositoryImpl
 import andre.dev.news.domain.DoSomething
 import andre.dev.news.domain.NewsRepository
 import andre.dev.news.remote.NewsRemoteSourceImpl
+import andre.dev.news.remote.NewsService
+import andre.dev.news.remote.NewsServiceFactory
 import andre.dev.presentation.NewsViewModel
 import android.app.Application
 import android.content.Context
@@ -17,6 +19,8 @@ import dagger.MapKey
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 import kotlin.reflect.KClass
 
@@ -57,5 +61,11 @@ abstract class NewsModule {
         fun provideDoSomething(repository: NewsRepositoryImpl): DoSomething = DoSomething {
             repository.doSomething()
         }
+
+        @Provides
+        fun providesDispatcher(): CoroutineDispatcher = Dispatchers.IO
+        @Singleton
+        @Provides
+        fun providesService(): NewsService = NewsServiceFactory().getServiceFactory()
     }
 }

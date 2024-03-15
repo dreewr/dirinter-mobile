@@ -1,7 +1,9 @@
 package andre.dev.news.domain
 
+import andre.dev.news.domain.model.Article
+
 fun interface DoSomething{
-    fun invoke()
+    suspend fun invoke(): List<Article>
 
 }
 //Adicionar o role do invoke para nomear os parametros

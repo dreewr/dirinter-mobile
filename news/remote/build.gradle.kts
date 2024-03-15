@@ -9,9 +9,11 @@ java {
 }
 
 dependencies {
+    implementation(project(":core:network"))
     implementation(project(":news:domain"))
     implementation(project(":news:data"))
 
     implementation(libs.bundles.javax)
-    ///
+    implementation(libs.bundles.retrofit)
+
 }

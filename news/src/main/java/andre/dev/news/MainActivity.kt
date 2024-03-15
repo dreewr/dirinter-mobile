@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import andre.dev.news.ui.theme.DerintMobileTheme
 import andre.dev.presentation.NewsViewModel
 import andre.dev.ui.NewsScreen
-import androidx.compose.runtime.ComposeCompilerApi
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +36,6 @@ class MainActivity : ComponentActivity() {
 fun Facade(){
     NewsScreen(NewsModuleInitializer.getNewsComponent().getViewModelProviderFactory().create(NewsViewModel::class.java))
 }
-
-
 
 
 @Composable

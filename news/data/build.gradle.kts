@@ -11,5 +11,4 @@ java {
 dependencies {
     implementation(project(":news:domain"))
     implementation(libs.bundles.javax)
-
 }
