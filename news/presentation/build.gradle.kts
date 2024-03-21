@@ -34,9 +34,10 @@ android {
 
 dependencies {
 
-    dependencies {
-        implementation(project(":news:domain"))
-    }
+    implementation(project(":news:domain"))
+
+    implementation(project(":core"))
+
 
     implementation(libs.bundles.javax)
     implementation(libs.bundles.androidx)

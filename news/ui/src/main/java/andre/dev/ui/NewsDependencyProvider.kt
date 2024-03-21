@@ -1,7 +1,6 @@
 package andre.dev.ui
 
-import androidx.lifecycle.ViewModelProvider
-
+import androidx.lifecycle.ViewModel
 interface NewsDependencyProvider {
-    fun getViewModelFactory(): ViewModelProvider.Factory
+    fun <T : ViewModel> getViewModel(modelClass: Class<T>): T
 }

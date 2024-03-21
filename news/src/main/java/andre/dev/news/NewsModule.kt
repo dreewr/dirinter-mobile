@@ -4,7 +4,7 @@ import andre.dev.news.cache.NewsCacheSourceImpl
 import andre.dev.news.data.NewsCacheSource
 import andre.dev.news.data.NewsRemoteSource
 import andre.dev.news.data.NewsRepositoryImpl
-import andre.dev.news.domain.DoSomething
+import andre.dev.news.domain.GetArticlesUseCase
 import andre.dev.news.domain.NewsRepository
 import andre.dev.news.remote.NewsRemoteSourceImpl
 import andre.dev.news.remote.NewsService
@@ -58,8 +58,8 @@ abstract class NewsModule {
         fun provideContext(application: Application): Context = application
 
         @Provides
-        fun provideDoSomething(repository: NewsRepositoryImpl): DoSomething = DoSomething {
-            repository.doSomething()
+        fun provideDoSomething(repository: NewsRepositoryImpl): GetArticlesUseCase = GetArticlesUseCase {
+            repository.getArticles()
         }
 
         @Provides
