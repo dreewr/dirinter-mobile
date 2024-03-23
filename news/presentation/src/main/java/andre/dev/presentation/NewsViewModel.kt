@@ -2,14 +2,11 @@ package andre.dev.presentation
 
 import andre.dev.lib.FailureType
 import andre.dev.lib.State
-import andre.dev.lib.isLoading
 import andre.dev.news.domain.GetArticlesUseCase
 import andre.dev.news.domain.model.Article
-import andre.dev.news.domain.model.getSomeFakeNews
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -30,33 +27,35 @@ class NewsViewModel @Inject constructor(
     }
 
     fun fetchArticles() = viewModelScope.launch(dispatcher) {
+        if (!_uiState.value.hasMorePages) return@launch
+
+        println("listsize " + _uiState.value.loadedNews.size )
 
         flow {
             emit(getArticles.getArticles())
         }.onStart {
-            _uiState.value = PaginationState(State.Loading(), _uiState.value.loadedNews)
-        }.catch {
-            _uiState.value = PaginationState(
-                State.Failure(FailureType.GenericFailure, message = it.localizedMessage),
-                _uiState.value.loadedNews
+            _uiState.value = _uiState.value.copy(currentState = State.Loading())
+        }.catch { exception ->
+            _uiState.value = _uiState.value.copy(
+                currentState = State.Failure(FailureType.GenericFailure, message = exception.localizedMessage)
             )
-        }.collect {
-            delay(1000)
-//            _uiState.value = PaginationState(
-//                State.Failure(FailureType.GenericFailure, message = it.localizedMessage),
-//                _uiState.value.loadedNews
-//            )
+        }.collect { articles ->
             _uiState.value = PaginationState(
-                State.Success(it),
-                _uiState.value.loadedNews + it
+                currentState = State.Success(articles),
+                loadedNews = _uiState.value.loadedNews + articles,
+                hasMorePages = articles.size == PAGE_SIZE
             )
         }
     }
 
     data class PaginationState(
         val currentState: State<List<Article>> = State.Loading(),
-        val loadedNews: List<Article> = listOf()
+        val loadedNews: List<Article> = listOf(),
+        val hasMorePages: Boolean = true
     )
+    companion object {
+        private const val PAGE_SIZE = 3
+    }
 }
 
 

@@ -1,8 +1,6 @@
 package andre.dev.ui
 
-import andre.dev.lib.isFailure
-import andre.dev.lib.isLoading
-import andre.dev.lib.isSuccess
+import andre.dev.lib.State
 import andre.dev.news.domain.model.Article
 import andre.dev.presentation.NewsViewModel
 import android.widget.Toast
@@ -54,25 +52,28 @@ fun NewsScreen(viewModelProvider: ViewModelProvider.Factory) {
 
     LazyColumn(modifier = Modifier.fillMaxSize(), state = lazyListState) {
 
-        //paging will always show the loaded news here
         items(pagingState.loadedNews) { article ->
             ArticleItem(article = article)
         }
 
-        //if it the current state is loading, then it should show a loading
-        if (pagingState.currentState.isLoading()) {
-            item {
-                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+        item {
+            when (pagingState.currentState) {
+                is State.Loading -> Box(
+                    modifier = if (pagingState.loadedNews.isEmpty()) Modifier.fillParentMaxSize()
+                    else Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
                     CircularProgressIndicator()
                 }
-            }
-        }
 
-        // Handle error state
-        if(pagingState.currentState.isFailure())
-            item {
-
-                Box(modifier = Modifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
+                is State.Failure -> Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
@@ -84,11 +85,8 @@ fun NewsScreen(viewModelProvider: ViewModelProvider.Factory) {
                         }
                     }
                 }
-            }
 
-        if (pagingState.currentState.isSuccess())
-            item {
-                InfiniteListHandler(
+                is State.Success -> InfiniteListHandler(
                     lazyListState = lazyListState,
                     onLoadMore = {
                         Toast.makeText(context, "Loading more articles...", Toast.LENGTH_SHORT)
@@ -96,12 +94,10 @@ fun NewsScreen(viewModelProvider: ViewModelProvider.Factory) {
                         viewModel.fetchArticles()
                     }
                 )
+
             }
-
+        }
     }
-
-
-
 }
 
 @Composable
@@ -120,7 +116,7 @@ fun ArticleItem(
                 modifier = Modifier
                     .fillMaxWidth() // Ensure the image matches the Card's width
                     .clip(RoundedCornerShape(8.dp)) // Rounded corners for the image
-                    .aspectRatio(3f / 2f), // 3:2 aspect ratio
+                    .aspectRatio(4f / 2f), // 3:2 aspect ratio
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(8.dp)) // Vertical spacing between the image and text
