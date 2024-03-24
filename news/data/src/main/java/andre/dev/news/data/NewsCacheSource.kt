@@ -1,16 +1,10 @@
 package andre.dev.news.data
 
+import andre.dev.news.domain.model.Article
+
 interface NewsCacheSource {
-    fun insertAll(news: List<String>)
+    suspend fun insertAll(news: List<Article>)
 
-    @Deprecated("not needed")
-    fun getAllNews(): List<String>
-
-
-
-
-
-    @Deprecated("not needed")
-    fun getMostRecentTimestamp(): Long?
+    suspend fun getArticles(startTimestamp: Long?, pageSize: Int): List<Article>
 
 }

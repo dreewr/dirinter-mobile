@@ -7,6 +7,7 @@ import andre.dev.news.domain.model.Article
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -29,10 +30,12 @@ class NewsViewModel @Inject constructor(
     fun fetchArticles() = viewModelScope.launch(dispatcher) {
         if (!_uiState.value.hasMorePages) return@launch
 
-        println("listsize " + _uiState.value.loadedNews.size )
 
         flow {
-            emit(getArticles.getArticles())
+            emit(getArticles.getArticles(
+                //SE NULO, BACKEND ENTENDE COMO "ME MANDE AS MAIS ATUAIS"
+                startTimestamp = _uiState.value.loadedNews.minOfOrNull { it.timestamp },
+                pageSize = PAGE_SIZE))
         }.onStart {
             _uiState.value = _uiState.value.copy(currentState = State.Loading())
         }.catch { exception ->
@@ -40,11 +43,16 @@ class NewsViewModel @Inject constructor(
                 currentState = State.Failure(FailureType.GenericFailure, message = exception.localizedMessage)
             )
         }.collect { articles ->
+
+            delay(200) //delay enquanto usa o mock
             _uiState.value = PaginationState(
                 currentState = State.Success(articles),
                 loadedNews = _uiState.value.loadedNews + articles,
                 hasMorePages = articles.size == PAGE_SIZE
             )
+
+            println("listsize " + _uiState.value.loadedNews.size )
+
         }
     }
 

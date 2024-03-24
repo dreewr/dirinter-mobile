@@ -58,8 +58,8 @@ abstract class NewsModule {
         fun provideContext(application: Application): Context = application
 
         @Provides
-        fun provideDoSomething(repository: NewsRepositoryImpl): GetArticlesUseCase = GetArticlesUseCase {
-            repository.getArticles()
+        fun provideDoSomething(repository: NewsRepositoryImpl)/*: GetArticlesUseCase */= GetArticlesUseCase { p1, p2 ->
+            repository.getArticles(p1, p2)
         }
 
         @Provides

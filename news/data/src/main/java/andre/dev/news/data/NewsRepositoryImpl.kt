@@ -10,22 +10,14 @@ class NewsRepositoryImpl @Inject constructor(
 ) : NewsRepository {
 
     // Assuming this fetches the initial set of articles
-    override suspend fun getArticles(): List<Article>{
+    override suspend fun getArticles(startTimestamp: Long?, pageSize: Int): List<Article> =
+        with(cacheSource) {
+            insertAll(
+                remoteSource.fetchArticles(startTimestamp, pageSize)
+            )
+            getArticles(startTimestamp, pageSize)
+        }
 
-
-
-
-
-
-
-        return remoteSource.fetchArticles()
-    }
-
-
-
-    companion object {
-        const val PAGE_SIZE = 5 // Assuming a page consists of 5 articles
-    }
 }
 
 
