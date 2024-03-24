@@ -59,6 +59,7 @@ dependencies {
     //////
     implementation(libs.bundles.dagger)
     kapt(libs.dagger.compiler)
+    implementation(libs.room.runtime)
 
     //////
     implementation("androidx.core:core-ktx:1.9.0")

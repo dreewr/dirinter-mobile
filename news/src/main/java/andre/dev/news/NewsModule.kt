@@ -1,6 +1,7 @@
 package andre.dev.news
 
 import andre.dev.news.cache.NewsCacheSourceImpl
+import andre.dev.news.cache.NewsDatabase
 import andre.dev.news.data.NewsCacheSource
 import andre.dev.news.data.NewsRemoteSource
 import andre.dev.news.data.NewsRepositoryImpl
@@ -53,19 +54,24 @@ abstract class NewsModule {
     abstract fun bindCacheSource(repository: NewsCacheSourceImpl): NewsCacheSource
 
     companion object {
-        @Provides
-        @Singleton
-        fun provideContext(application: Application): Context = application
+//        @Provides
+//        @Singleton
+//        fun provideContext(application: Application): Context = application
 
         @Provides
-        fun provideDoSomething(repository: NewsRepositoryImpl)/*: GetArticlesUseCase */= GetArticlesUseCase { p1, p2 ->
+        fun provideDoSomething(repository: NewsRepositoryImpl) = GetArticlesUseCase { p1, p2 ->
             repository.getArticles(p1, p2)
         }
 
         @Provides
         fun providesDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
         @Singleton
         @Provides
         fun providesService(): NewsService = NewsServiceFactory().getServiceFactory()
+
+        @Provides
+        @Singleton
+        fun provideAppDatabase(application: Context) = NewsDatabase.getInstance(application)
     }
 }

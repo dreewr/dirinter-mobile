@@ -30,10 +30,8 @@ class NewsViewModel @Inject constructor(
     fun fetchArticles() = viewModelScope.launch(dispatcher) {
         if (!_uiState.value.hasMorePages) return@launch
 
-
         flow {
             emit(getArticles.getArticles(
-                //SE NULO, BACKEND ENTENDE COMO "ME MANDE AS MAIS ATUAIS"
                 startTimestamp = _uiState.value.loadedNews.minOfOrNull { it.timestamp },
                 pageSize = PAGE_SIZE))
         }.onStart {
@@ -44,15 +42,12 @@ class NewsViewModel @Inject constructor(
             )
         }.collect { articles ->
 
-            delay(200) //delay enquanto usa o mock
+            delay(200) //TODO: REMOVER OS MOCKS
             _uiState.value = PaginationState(
                 currentState = State.Success(articles),
                 loadedNews = _uiState.value.loadedNews + articles,
                 hasMorePages = articles.size == PAGE_SIZE
             )
-
-            println("listsize " + _uiState.value.loadedNews.size )
-
         }
     }
 
