@@ -5,7 +5,6 @@ import andre.dev.news.ui.theme.DerintMobileTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -31,7 +30,6 @@ class DerintActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DerintMobileTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -44,7 +42,12 @@ class DerintActivity : ComponentActivity() {
                             BottomAppBar {
                                 items.forEachIndexed { index, item ->
                                     NavigationBarItem(
-                                        icon = { Icon(Icons.Filled.Home, contentDescription = null) },
+                                        icon = {
+                                            Icon(
+                                                Icons.Filled.Home,
+                                                contentDescription = null
+                                            )
+                                        },
                                         label = { Text(item) },
                                         selected = selectedItem == index,
                                         onClick = { selectedItem = index }
@@ -53,19 +56,13 @@ class DerintActivity : ComponentActivity() {
                             }
                         }
                     ) { innerPadding ->
-                        println(innerPadding)
-                        val currentNavController = rememberNavController()// navControllers[selectedItem]
+                        val currentNavController = rememberNavController()
                         NavHost(
                             navController = currentNavController,
                             startDestination = "main",
                             modifier = Modifier.padding(innerPadding)
                         ) {
-                            composable("main") {
-                                Column {
-                                    Text(text = "Main Screen of ${items[selectedItem]}")
-                                    NewsFeature()
-                                }
-                            }
+                            composable("main") { NewsFeature() }
                         }
                     }
                 }

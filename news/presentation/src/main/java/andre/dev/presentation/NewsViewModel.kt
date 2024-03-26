@@ -17,8 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewsViewModel @Inject constructor(
-    private val getArticles: GetArticlesUseCase,
-    private val dispatcher: CoroutineDispatcher
+    private val getArticles: GetArticlesUseCase, private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(PaginationState())
     val uiState = _uiState.asStateFlow()
@@ -32,17 +31,17 @@ class NewsViewModel @Inject constructor(
 
         flow {
             emit(getArticles.getArticles(
-                startTimestamp = _uiState.value.loadedNews.minOfOrNull { it.timestamp },
-                pageSize = PAGE_SIZE))
+                _uiState.value.loadedNews.minOfOrNull { it.publishingTimestamp }
+                    ?: System.currentTimeMillis(), PAGE_SIZE))
         }.onStart {
             _uiState.value = _uiState.value.copy(currentState = State.Loading())
         }.catch { exception ->
             _uiState.value = _uiState.value.copy(
-                currentState = State.Failure(FailureType.GenericFailure, message = exception.localizedMessage)
+                currentState = State.Failure(
+                    FailureType.GenericFailure, message = exception.localizedMessage
+                )
             )
         }.collect { articles ->
-
-            delay(200) //TODO: REMOVER OS MOCKS
             _uiState.value = PaginationState(
                 currentState = State.Success(articles),
                 loadedNews = _uiState.value.loadedNews + articles,
@@ -56,6 +55,7 @@ class NewsViewModel @Inject constructor(
         val loadedNews: List<Article> = listOf(),
         val hasMorePages: Boolean = true
     )
+
     companion object {
         private const val PAGE_SIZE = 3
     }

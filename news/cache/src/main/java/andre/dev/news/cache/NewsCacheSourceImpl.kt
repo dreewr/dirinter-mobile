@@ -9,11 +9,13 @@ class NewsCacheSourceImpl @Inject constructor(
 ) : NewsCacheSource {
 
     override suspend fun insertAll(news: List<Article>) {
-        database.newsDao().insertAll(news.map { it.toEntity() })
+        database.newsDao().insertAll(news.map { it.toEntity(System.currentTimeMillis()) })
     }
 
-    override suspend fun getArticles(startTimestamp: Long, pageSize: Int): List<Article> {
-        return database.newsDao().getArticles(startTimestamp, pageSize)
+    override suspend fun getArticles(startTimestamp: Long, pageSize: Int): List<Article> = with(database.newsDao()){
+        deleteExpiredArticles(System.currentTimeMillis())
+
+        getArticles(startTimestamp, pageSize)
             .map { it.toArticle() }
     }
 }

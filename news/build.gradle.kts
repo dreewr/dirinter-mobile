@@ -58,8 +58,10 @@ dependencies {
 
     //////
     implementation(libs.bundles.dagger)
+    implementation(libs.androidx.navigation.runtime.ktx)
     kapt(libs.dagger.compiler)
     implementation(libs.room.runtime)
+    implementation(libs.bundles.compose)
 
     //////
     implementation("androidx.core:core-ktx:1.9.0")

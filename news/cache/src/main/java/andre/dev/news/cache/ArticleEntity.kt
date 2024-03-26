@@ -10,7 +10,8 @@ data class ArticleEntity(
     val title: String,
     val summary: String,
     val thumbnailUrl: String,
-    val timestamp: Long
+    val timestamp: Long,
+    val expirationTimestamp: Long
 )
 
 fun ArticleEntity.toArticle(): Article = Article(
@@ -18,13 +19,14 @@ fun ArticleEntity.toArticle(): Article = Article(
     title = title,
     summary = summary,
     thumbnailUrl = thumbnailUrl,
-    timestamp = timestamp
+    publishingTimestamp = timestamp
 )
 
-fun Article.toEntity(): ArticleEntity = ArticleEntity(
+fun Article.toEntity(insertionTimestamp: Long): ArticleEntity = ArticleEntity(
     id = id,
     title = title,
     summary = summary,
     thumbnailUrl = thumbnailUrl,
-    timestamp = timestamp
+    timestamp = publishingTimestamp,
+    expirationTimestamp = insertionTimestamp + (24 * 60 * 60 * 1000)
 )

@@ -2,8 +2,9 @@ package andre.dev.ui
 
 import andre.dev.lib.State
 import andre.dev.news.domain.model.Article
+import andre.dev.news.ui.R
 import andre.dev.presentation.NewsViewModel
-import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,20 +41,25 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
+import coil.request.ImageRequest
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
-fun NewsScreen(viewModelProvider: ViewModelProvider.Factory) {
+fun NewsScreen(
+    onAction: (NewsAction) -> Unit, viewModelProvider: ViewModelProvider.Factory
+) {
+
     val viewModel: NewsViewModel = viewModel(factory = viewModelProvider)
     val pagingState by viewModel.uiState.collectAsState()
 
     val lazyListState = rememberLazyListState()
-    val context = LocalContext.current
 
     LazyColumn(modifier = Modifier.fillMaxSize(), state = lazyListState) {
 
         items(pagingState.loadedNews) { article ->
-            ArticleItem(article = article)
+            ArticleItem(article = article,
+                onItemClick = { onAction(NewsAction.OnNewsSelected(article.id)) })
         }
 
         item {
@@ -65,13 +71,14 @@ fun NewsScreen(viewModelProvider: ViewModelProvider.Factory) {
                         .padding(vertical = 32.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator()
+                     CircularProgressIndicator()
                 }
 
                 is State.Failure -> Box(
-                    modifier = Modifier
+                    modifier = if (pagingState.loadedNews.isEmpty()) Modifier.fillParentMaxSize()
+                    else Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(vertical = 32.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
@@ -86,15 +93,11 @@ fun NewsScreen(viewModelProvider: ViewModelProvider.Factory) {
                     }
                 }
 
-                is State.Success -> InfiniteListHandler(
-                    lazyListState = lazyListState,
-                    onLoadMore = {
-                        Toast.makeText(context, "Loading more articles...", Toast.LENGTH_SHORT)
-                            .show()
-                        viewModel.fetchArticles()
-                    }
-                )
-
+                is State.Success -> {
+                    InfiniteListHandler(
+                        lazyListState = lazyListState, onLoadMore = viewModel::fetchArticles
+                    )
+                }
             }
         }
     }
@@ -102,21 +105,27 @@ fun NewsScreen(viewModelProvider: ViewModelProvider.Factory) {
 
 @Composable
 fun ArticleItem(
-    article: Article
+    article: Article, onItemClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
-            .padding(16.dp),
+            .padding(16.dp)
+            .clickable { onItemClick(article.id) },
         shape = RoundedCornerShape(8.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             AsyncImage(
-                model = article.thumbnailUrl,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(article.thumbnailUrl)
+                    .crossfade(true)
+                    .memoryCachePolicy(CachePolicy.ENABLED)
+                    .diskCachePolicy(CachePolicy.ENABLED)
+                    .build(),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth() // Ensure the image matches the Card's width
                     .clip(RoundedCornerShape(8.dp)) // Rounded corners for the image
-                    .aspectRatio(4f / 2f), // 3:2 aspect ratio
+                    .aspectRatio(4f / 2f), // 4:2 aspect ratio
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(8.dp)) // Vertical spacing between the image and text
@@ -128,19 +137,31 @@ fun ArticleItem(
             )
             Spacer(modifier = Modifier.height(4.dp)) // Vertical spacing between the title and summary
             Text(
-                text = article.summary,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                text = article.summary, maxLines = 2, overflow = TextOverflow.Ellipsis
             )
         }
     }
 }
 
 @Composable
+fun Boxed(
+    isEmpty: Boolean,
+    content: @Composable () -> Unit
+) {
+    Box(
+        modifier = if (isEmpty) Modifier.fillMaxSize()
+        else Modifier
+            .fillMaxWidth()
+            .padding(vertical = 32.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        content()
+    }
+}
+
+@Composable
 fun InfiniteListHandler(
-    lazyListState: LazyListState,
-    buffer: Int = 0,
-    onLoadMore: () -> Unit
+    lazyListState: LazyListState, buffer: Int = 0, onLoadMore: () -> Unit
 ) {
     val loadMore = remember {
         derivedStateOf {
@@ -153,10 +174,9 @@ fun InfiniteListHandler(
     }
 
     LaunchedEffect(loadMore) {
-        snapshotFlow { loadMore.value }
-            .distinctUntilChanged()
-            .collect {
-                onLoadMore()
-            }
+        snapshotFlow { loadMore.value }.distinctUntilChanged().collect {
+            onLoadMore()
+        }
     }
+
 }

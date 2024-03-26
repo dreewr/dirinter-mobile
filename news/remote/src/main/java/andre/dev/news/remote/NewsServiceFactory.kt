@@ -5,6 +5,6 @@ import andre.dev.core.network.ServiceFactory
 class NewsServiceFactory {
     fun getServiceFactory() = ServiceFactory.createService(
         NewsService::class.java,
-        "http://derint-mobile-api-env-1.eba-6diqhtjr.us-east-1.elasticbeanstalk.com/api/"
+        "http://10.0.2.2:8080/api/" //LOCALHOST
     )
 }

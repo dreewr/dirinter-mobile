@@ -5,5 +5,5 @@ data class Article(
     val title: String,
     val summary: String,
     val thumbnailUrl: String,
-    val timestamp: Long
+    val publishingTimestamp: Long
 )
