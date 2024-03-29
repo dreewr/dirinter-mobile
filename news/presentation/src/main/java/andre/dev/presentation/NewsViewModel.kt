@@ -5,7 +5,6 @@ import andre.dev.lib.State
 import andre.dev.news.domain.GetArticlesUseCase
 import andre.dev.news.domain.model.ArticleSummary
 import andre.dev.presentation.model.ArticleSummaryView
-import andre.dev.presentation.model.mapToArticleView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
@@ -43,7 +42,7 @@ class NewsViewModel @Inject constructor(
         }.collect { articles ->
             _uiState.value = PaginationState(
                 currentState = State.Success(articles),
-                loadedNews = _uiState.value.loadedNews + articles.map(::mapToArticleView),
+                loadedNews = _uiState.value.loadedNews + articles.map(::ArticleSummaryView),
                 hasMorePages = articles.size == PAGE_SIZE,
                 thresholdTimestamp = minOf(
                     _uiState.value.thresholdTimestamp,

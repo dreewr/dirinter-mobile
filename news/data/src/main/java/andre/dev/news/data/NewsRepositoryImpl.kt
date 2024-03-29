@@ -34,16 +34,20 @@ class NewsRepositoryImpl @Inject constructor(
             cachedArticles.ifEmpty { throw NewsException.NetworkError() }
         }
 
-        return cachedArticles + additionalArticles
+        return (cachedArticles + additionalArticles).distinctBy { it.id }
     }
 
-    override suspend fun getArticle(id: String): Article = Article(
-        id = "fake-article-123",
-        author = "author",
-        title = "Exploring the Wonders of Space: A Journey Beyond",
-        thumbnailUrl = "https://example.com/fake-thumbnail.jpg",
-        publishingTimestamp = 1711492022L,
-        content = "conteudo da noticia",
-        lastEditTimestamp = 1711892022L
-        )
+    override suspend fun getArticle(id: String): Article {
+
+        cacheSource.getArticle(id)?.let { return it }
+
+        return runCatching { remoteSource.getArticleById(id) }
+            .onSuccess { freshArticle ->
+                cacheSource.insertArticle(freshArticle)
+                return freshArticle
+            }.getOrElse { e ->
+                println(e)
+                throw NewsException.NetworkError()
+            }
+    }
 }

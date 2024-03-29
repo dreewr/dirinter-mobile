@@ -1,4 +1,4 @@
-package andre.dev.news.cache
+package andre.dev.news.model
 
 import andre.dev.news.domain.model.ArticleSummary
 import androidx.room.Entity

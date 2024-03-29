@@ -80,7 +80,7 @@ fun NewsToolbar(navController: NavController) {
         title = {
             Text(text = when (currentRoute) {
                 "newsList" -> "Derint Mobile"
-                else -> String() //if (currentRoute?.startsWith("newsDetail") == true) "News Detail" else ""
+                else -> String()
             })
         },
         navigationIcon = {

@@ -14,11 +14,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
@@ -53,9 +53,9 @@ fun NewsScreen(
     val lazyListState = rememberLazyListState()
 
     LazyColumn(modifier = Modifier.fillMaxSize(), state = lazyListState) {
-
-        items(pagingState.loadedNews) { article ->
+        itemsIndexed(pagingState.loadedNews) { index, article ->
             ArticleItem(article = article,
+                showDivider = index < pagingState.loadedNews.size - 1,
                 onItemClick = {
                     onAction(NewsAction.OnNewsSelected(article.id))
                 })
@@ -70,7 +70,7 @@ fun NewsScreen(
                         .padding(vertical = 32.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                     CircularProgressIndicator()
+                    CircularProgressIndicator()
                 }
 
                 is State.Failure -> Box(
@@ -97,42 +97,42 @@ fun NewsScreen(
 
 @Composable
 fun ArticleItem(
-    article: ArticleSummaryView, onItemClick: (String) -> Unit
+    article: ArticleSummaryView, onItemClick: (String) -> Unit,
+    showDivider: Boolean
 ) {
-    Card(
-        modifier = Modifier
-            .padding(16.dp)
-            .clickable { onItemClick(article.id) },
-        shape = RoundedCornerShape(8.dp)
+    Column(modifier = Modifier
+        .clickable { onItemClick(article.id) }
+        .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 24.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(article.thumbnailUrl)
-                    .crossfade(true)
-                    .memoryCachePolicy(CachePolicy.ENABLED)
-                    .diskCachePolicy(CachePolicy.ENABLED)
-                    .build(),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth() // Ensure the image matches the Card's width
-                    .clip(RoundedCornerShape(8.dp)) // Rounded corners for the image
-                    .aspectRatio(4f / 2f), // 4:2 aspect ratio
-                contentScale = ContentScale.Crop
-            )
-            Spacer(modifier = Modifier.height(8.dp)) // Vertical spacing between the image and text
-            Text(
-                text = article.title,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(4.dp)) // Vertical spacing between the title and summary
-            Text(
-                text = article.publishingDate, maxLines = 2, overflow = TextOverflow.Ellipsis
-            )
-        }
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(article.thumbnailUrl)
+                .crossfade(true)
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .build(),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .aspectRatio(4f / 2f),
+            contentScale = ContentScale.Crop)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = article.title,
+            style = MaterialTheme.typography.headlineSmall,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = article.publishingDetails, maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.bodySmall
+        )
+        if (showDivider) Divider(modifier = Modifier.padding(top = 16.dp))
     }
+
 }
 
 @Composable

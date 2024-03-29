@@ -3,7 +3,7 @@ package andre.dev.news.remote.response
 import andre.dev.news.domain.model.ArticleSummary
 import com.google.gson.annotations.SerializedName
 
-data class ArticlesResponse(
+data class ArticleSummariesResponse(
     val articles: List<ArticleSummaryResponse>
 )
 

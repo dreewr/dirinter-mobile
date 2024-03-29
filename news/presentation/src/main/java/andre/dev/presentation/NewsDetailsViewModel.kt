@@ -5,6 +5,7 @@ import andre.dev.lib.State
 import andre.dev.news.domain.GetArticleByIdUseCase
 import andre.dev.news.domain.model.Article
 import andre.dev.news.domain.model.ArticleSummary
+import andre.dev.presentation.model.ArticleView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,9 +22,9 @@ class NewsDetailsViewModel @Inject constructor(
     private val getArticleById: GetArticleByIdUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<State<Article>>(State.Loading())
+    private val _uiState = MutableStateFlow<State<ArticleView>>(State.Loading())
 
-    val uiState: StateFlow<State<Article>> = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
     fun fetchArticle(newsId: String) {
         viewModelScope.launch(dispatcher) {
@@ -35,7 +36,7 @@ class NewsDetailsViewModel @Inject constructor(
             }.catch {
                 _uiState.value = State.Failure(FailureType.GenericFailure)
             }.collect { article ->
-                _uiState.value = State.Success(article)
+                _uiState.value = State.Success(ArticleView(article))
             }
         }
     }
