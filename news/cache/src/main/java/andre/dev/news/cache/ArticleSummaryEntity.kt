@@ -1,31 +1,28 @@
 package andre.dev.news.cache
 
-import andre.dev.news.domain.model.Article
+import andre.dev.news.domain.model.ArticleSummary
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class ArticleEntity(
+data class ArticleSummaryEntity(
     @PrimaryKey val id: String,
     val title: String,
-    val summary: String,
     val thumbnailUrl: String,
     val timestamp: Long,
     val expirationTimestamp: Long
 )
 
-fun ArticleEntity.toArticle(): Article = Article(
+fun ArticleSummaryEntity.toArticle(): ArticleSummary = ArticleSummary(
     id = id,
     title = title,
-    summary = summary,
     thumbnailUrl = thumbnailUrl,
     publishingTimestamp = timestamp
 )
 
-fun Article.toEntity(insertionTimestamp: Long): ArticleEntity = ArticleEntity(
+fun ArticleSummary.toEntity(insertionTimestamp: Long): ArticleSummaryEntity = ArticleSummaryEntity(
     id = id,
     title = title,
-    summary = summary,
     thumbnailUrl = thumbnailUrl,
     timestamp = publishingTimestamp,
     expirationTimestamp = insertionTimestamp + (24 * 60 * 60 * 1000)

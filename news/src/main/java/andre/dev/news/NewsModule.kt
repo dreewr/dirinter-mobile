@@ -5,13 +5,14 @@ import andre.dev.news.cache.NewsDatabase
 import andre.dev.news.data.NewsCacheSource
 import andre.dev.news.data.NewsRemoteSource
 import andre.dev.news.data.NewsRepositoryImpl
+import andre.dev.news.domain.GetArticleByIdUseCase
 import andre.dev.news.domain.GetArticlesUseCase
 import andre.dev.news.domain.NewsRepository
 import andre.dev.news.remote.NewsRemoteSourceImpl
 import andre.dev.news.remote.NewsService
 import andre.dev.news.remote.NewsServiceFactory
+import andre.dev.presentation.NewsDetailsViewModel
 import andre.dev.presentation.NewsViewModel
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -39,7 +40,12 @@ abstract class NewsModule {
     @Binds
     @IntoMap
     @ViewModelKey(NewsViewModel::class)
-    abstract fun bindNewsViewModel(newsViewModel: NewsViewModel): ViewModel
+    abstract fun bindNewsViewModel(viewModel: NewsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NewsDetailsViewModel::class)
+    abstract fun bindNewsDetailsViewModel(viewModel: NewsDetailsViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
@@ -54,12 +60,14 @@ abstract class NewsModule {
     abstract fun bindCacheSource(repository: NewsCacheSourceImpl): NewsCacheSource
 
     companion object {
-//        @Provides
-//        @Singleton
-//        fun provideContext(application: Application): Context = application
 
         @Provides
-        fun provideDoSomething(repository: NewsRepositoryImpl) = GetArticlesUseCase { p1, p2 ->
+        fun provideGetArticleByIdUseCase(repository: NewsRepositoryImpl) = GetArticleByIdUseCase { p1 ->
+            repository.getArticle(p1)
+        }
+
+        @Provides
+        fun provideGetArticlesUseCase(repository: NewsRepositoryImpl) = GetArticlesUseCase { p1, p2 ->
             repository.getArticles(p1, p2)
         }
 

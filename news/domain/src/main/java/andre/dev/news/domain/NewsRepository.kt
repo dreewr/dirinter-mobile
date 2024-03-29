@@ -1,2 +1,2 @@
 package andre.dev.news.domain
-interface NewsRepository: GetArticlesUseCase
+interface NewsRepository: GetArticlesUseCase, GetArticleByIdUseCase

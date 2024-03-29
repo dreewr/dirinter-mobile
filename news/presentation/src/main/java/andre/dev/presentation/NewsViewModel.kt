@@ -3,11 +3,12 @@ package andre.dev.presentation
 import andre.dev.lib.FailureType
 import andre.dev.lib.State
 import andre.dev.news.domain.GetArticlesUseCase
-import andre.dev.news.domain.model.Article
+import andre.dev.news.domain.model.ArticleSummary
+import andre.dev.presentation.model.ArticleSummaryView
+import andre.dev.presentation.model.mapToArticleView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
@@ -30,9 +31,7 @@ class NewsViewModel @Inject constructor(
         if (!_uiState.value.hasMorePages) return@launch
 
         flow {
-            emit(getArticles.getArticles(
-                _uiState.value.loadedNews.minOfOrNull { it.publishingTimestamp }
-                    ?: System.currentTimeMillis(), PAGE_SIZE))
+            emit(getArticles.getArticles(_uiState.value.thresholdTimestamp, PAGE_SIZE))
         }.onStart {
             _uiState.value = _uiState.value.copy(currentState = State.Loading())
         }.catch { exception ->
@@ -44,16 +43,21 @@ class NewsViewModel @Inject constructor(
         }.collect { articles ->
             _uiState.value = PaginationState(
                 currentState = State.Success(articles),
-                loadedNews = _uiState.value.loadedNews + articles,
-                hasMorePages = articles.size == PAGE_SIZE
+                loadedNews = _uiState.value.loadedNews + articles.map(::mapToArticleView),
+                hasMorePages = articles.size == PAGE_SIZE,
+                thresholdTimestamp = minOf(
+                    _uiState.value.thresholdTimestamp,
+                    articles.minOfOrNull { it.publishingTimestamp } ?: Long.MAX_VALUE
+                )
             )
         }
     }
 
     data class PaginationState(
-        val currentState: State<List<Article>> = State.Loading(),
-        val loadedNews: List<Article> = listOf(),
-        val hasMorePages: Boolean = true
+        val currentState: State<List<ArticleSummary>> = State.Loading(),
+        val loadedNews: List<ArticleSummaryView> = listOf(),
+        val hasMorePages: Boolean = true,
+        val thresholdTimestamp: Long = Long.MAX_VALUE
     )
 
     companion object {

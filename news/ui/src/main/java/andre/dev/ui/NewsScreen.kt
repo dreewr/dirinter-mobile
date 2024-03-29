@@ -1,11 +1,9 @@
 package andre.dev.ui
 
 import andre.dev.lib.State
-import andre.dev.news.domain.model.Article
-import andre.dev.news.ui.R
 import andre.dev.presentation.NewsViewModel
+import andre.dev.presentation.model.ArticleSummaryView
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -59,7 +56,9 @@ fun NewsScreen(
 
         items(pagingState.loadedNews) { article ->
             ArticleItem(article = article,
-                onItemClick = { onAction(NewsAction.OnNewsSelected(article.id)) })
+                onItemClick = {
+                    onAction(NewsAction.OnNewsSelected(article.id))
+                })
         }
 
         item {
@@ -81,15 +80,8 @@ fun NewsScreen(
                         .padding(vertical = 32.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(text =/*pagingState.currentState.message ?:*/ "An error occurred")
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Button(onClick = { viewModel.fetchArticles() }) {
-                            Text("Retry")
-                        }
+                    RetryMessage("An error occurred") {
+                        viewModel.fetchArticles()
                     }
                 }
 
@@ -105,7 +97,7 @@ fun NewsScreen(
 
 @Composable
 fun ArticleItem(
-    article: Article, onItemClick: (String) -> Unit
+    article: ArticleSummaryView, onItemClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -137,25 +129,9 @@ fun ArticleItem(
             )
             Spacer(modifier = Modifier.height(4.dp)) // Vertical spacing between the title and summary
             Text(
-                text = article.summary, maxLines = 2, overflow = TextOverflow.Ellipsis
+                text = article.publishingDate, maxLines = 2, overflow = TextOverflow.Ellipsis
             )
         }
-    }
-}
-
-@Composable
-fun Boxed(
-    isEmpty: Boolean,
-    content: @Composable () -> Unit
-) {
-    Box(
-        modifier = if (isEmpty) Modifier.fillMaxSize()
-        else Modifier
-            .fillMaxWidth()
-            .padding(vertical = 32.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        content()
     }
 }
 

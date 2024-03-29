@@ -4,8 +4,6 @@ import andre.dev.news.NewsModuleInitializer.getNewsComponent
 import andre.dev.ui.NewsAction
 import andre.dev.ui.NewsDetailsScreen
 import andre.dev.ui.NewsScreen
-import android.widget.Toolbar
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -34,7 +32,7 @@ fun NewsFeature() {
 
     Scaffold(
         topBar = {
-            Toolbar(navController = navController)
+            NewsToolbar(navController = navController)
         }
     ) { paddingValues->
 
@@ -62,7 +60,10 @@ fun NewsFeature() {
                 // Retrieve the newsId from the backStackEntry
                 val newsId = backStackEntry.arguments?.getString("id")
                 newsId?.let {
-                    NewsDetailsScreen(newsId = it)
+                    NewsDetailsScreen(
+                        newsId = it,
+                        viewModelProvider = viewModelProviderFactory
+                    )
                 }
             }
         }
@@ -71,7 +72,7 @@ fun NewsFeature() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Toolbar(navController: NavController) {
+fun NewsToolbar(navController: NavController) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 

@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":news:presentation"))
     implementation(project(":news:domain"))
     implementation(project(":core"))
+    implementation(project(":core:ui"))
 
 
     //////

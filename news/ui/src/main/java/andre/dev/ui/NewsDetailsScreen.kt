@@ -22,24 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import coil.compose.rememberImagePainter
-
 @Composable
-fun NewsDetailsScreen(newsId: String) {
-    
-    Text(text = "entered here!!!!!!")
-    // Placeholder UI for news details
-//    Scaffold(topBar = { TopAppBar(title = { Text("News Details") }) }) {
-//        Column(modifier = Modifier.padding(it).padding(16.dp)) {
-//            Text(text = "Details for news ID: $newsId", style = MaterialTheme.typography.h4)
-//            // Add more details about the news here
-//        }
-//    }
-}
-
-
-
-@Composable
-fun NewsDetailsScreen(onAction: (NewsAction) -> Unit,
+fun NewsDetailsScreen(newsId: String,
                       viewModelProvider: ViewModelProvider.Factory) {
 
 
