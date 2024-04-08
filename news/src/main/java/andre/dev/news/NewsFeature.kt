@@ -79,7 +79,7 @@ fun NewsToolbar(navController: NavController) {
     TopAppBar(
         title = {
             Text(text = when (currentRoute) {
-                "newsList" -> "Derint Mobile"
+                "newsList" -> "DIRINTER Mobile"
                 else -> String()
             })
         },

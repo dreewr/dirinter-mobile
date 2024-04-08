@@ -1,4 +1,4 @@
-package andre.dev.derintmobile
+package andre.dev.dirintermobile
 
 import org.junit.Test
 

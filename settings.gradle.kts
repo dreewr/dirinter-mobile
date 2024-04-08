@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "DerintMobile"
+rootProject.name = "DirinterMobile"
 include(":app")
 include(":news")
 include(":core")

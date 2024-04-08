@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "andre.dev.derintmobile"
+    namespace = "andre.dev.dirinter"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "andre.dev.derintmobile"
+        applicationId = "andre.dev.dirintermobile"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

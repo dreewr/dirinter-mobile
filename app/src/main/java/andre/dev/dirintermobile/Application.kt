@@ -1,4 +1,4 @@
-package andre.dev.derintmobile
+package andre.dev.dirintermobile
 
 import andre.dev.news.NewsModuleInitializer
 import android.app.Application
