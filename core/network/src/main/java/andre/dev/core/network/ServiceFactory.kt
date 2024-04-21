@@ -7,14 +7,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ServiceFactory {
-    fun <T> createService(serviceClass: Class<T>, baseUrl: String): T {
+    fun <T> createService(serviceClass: Class<T>): T {
 
         fun makeLoggingInterceptor() = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl("http://10.0.2.2:8080/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(makeOkHttpClient(makeLoggingInterceptor()))
             .build()

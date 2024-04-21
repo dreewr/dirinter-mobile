@@ -1,5 +1,6 @@
 package andre.dev.dirintermobile
 
+import andre.dev.news.LoginFeature
 import andre.dev.news.NewsFeature
 import andre.dev.news.ui.theme.DIRINTERMobileTheme
 import android.os.Bundle
@@ -59,10 +60,11 @@ class DIRINTERActivity : ComponentActivity() {
                         val currentNavController = rememberNavController()
                         NavHost(
                             navController = currentNavController,
-                            startDestination = "main",
+                            startDestination = "login",
                             modifier = Modifier.padding(innerPadding)
                         ) {
                             composable("main") { NewsFeature() }
+                            composable("login") { LoginFeature() }
                         }
                     }
                 }

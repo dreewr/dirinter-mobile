@@ -1,5 +1,6 @@
 package andre.dev.news
 
+import andre.dev.lib.ViewModelKey
 import andre.dev.news.cache.NewsCacheSourceImpl
 import andre.dev.news.cache.NewsDatabase
 import andre.dev.news.data.NewsCacheSource
@@ -26,13 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 import kotlin.reflect.KClass
 
-@MustBeDocumented
-@Target(
-    AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER
-)
-@Retention(AnnotationRetention.RUNTIME)
-@MapKey
-annotation class ViewModelKey(val value: KClass<out ViewModel>)
+
 
 @Module
 abstract class NewsModule {

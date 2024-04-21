@@ -1,16 +1,12 @@
 package andre.dev.presentation
 
-import andre.dev.lib.FailureType
 import andre.dev.lib.State
 import andre.dev.news.domain.GetArticleByIdUseCase
-import andre.dev.news.domain.model.Article
-import andre.dev.news.domain.model.ArticleSummary
 import andre.dev.presentation.model.ArticleView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -31,10 +27,9 @@ class NewsDetailsViewModel @Inject constructor(
             flow {
                 emit(getArticleById.getArticle(newsId))
             }.onStart {
-                // Emit loading state before starting the flow
                 _uiState.value = State.Loading()
             }.catch {
-                _uiState.value = State.Failure(FailureType.GenericFailure)
+                _uiState.value = State.Failure()
             }.collect { article ->
                 _uiState.value = State.Success(ArticleView(article))
             }

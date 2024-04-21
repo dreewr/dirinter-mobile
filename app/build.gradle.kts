@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.bundles.compose)
 
     implementation(project(":news"))
+    implementation(project(":login"))
 
     //Ajustar para libs.toml e arrumar o role todo
     implementation("androidx.core:core-ktx:1.9.0")

@@ -11,7 +11,6 @@ import androidx.room.RoomDatabase
 abstract class NewsDatabase : RoomDatabase() {
     abstract fun newsDao(): NewsDao
 
-
     companion object {
         fun getInstance(context: Context): NewsDatabase =
             Room.databaseBuilder(

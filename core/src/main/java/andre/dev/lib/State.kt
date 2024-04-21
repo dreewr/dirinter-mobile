@@ -1,14 +1,11 @@
 package andre.dev.lib
 
+import kotlin.Exception
+
 sealed interface State<T>{
-    open class Failure<T>(val errorType: FailureType, val message: String? = null): State<T>
+    open class Failure<T>(exception: Exception = Exception()): State<T>
     data class Success<T>(val data: T): State<T>
     class Loading<T> : State<T>
-}
-
-sealed interface FailureType{
-    object NetworkFailure : FailureType
-    object GenericFailure : FailureType
 }
 
 fun State<*>.isLoading() = this is State.Loading<*>

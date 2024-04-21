@@ -1,6 +1,5 @@
 package andre.dev.presentation
 
-import andre.dev.lib.FailureType
 import andre.dev.lib.State
 import andre.dev.news.domain.GetArticlesUseCase
 import andre.dev.news.domain.model.ArticleSummary
@@ -33,11 +32,9 @@ class NewsViewModel @Inject constructor(
             emit(getArticles.getArticles(_uiState.value.thresholdTimestamp, PAGE_SIZE))
         }.onStart {
             _uiState.value = _uiState.value.copy(currentState = State.Loading())
-        }.catch { exception ->
+        }.catch {
             _uiState.value = _uiState.value.copy(
-                currentState = State.Failure(
-                    FailureType.GenericFailure, message = exception.localizedMessage
-                )
+                currentState = State.Failure()
             )
         }.collect { articles ->
             _uiState.value = PaginationState(

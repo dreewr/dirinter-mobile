@@ -55,6 +55,8 @@ dependencies {
     implementation(project(":news:remote"))
     implementation(project(":news:cache"))
     implementation(project(":news:domain"))
+    implementation(project(":core"))
+
 
     //////
     implementation(libs.bundles.dagger)

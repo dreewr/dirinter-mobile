@@ -50,6 +50,7 @@ fun NewsDetailsScreen(newsId: String, viewModelProvider: ViewModelProvider.Facto
 
     when (state) {
         is State.Loading -> Box(
+
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
