@@ -5,13 +5,15 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+
+/*TODO: USE MAPPERS*/
 data class ArticleView(
     val id: String,
     val author: String,
     val title: String,
     val content: String,
     val thumbnailUrl: String,
-    val publishingDetails: String // Modified to combine publishing date and last edit date
+    val publishingDetails: String
 ) {
     constructor(article: Article) : this(
         id = article.id,
@@ -23,6 +25,8 @@ data class ArticleView(
                 " última modificação às ${article.lastEditTimestamp.toFormattedDate()}"
     )
 }
+
+//TODO: MOVER PARA UM UTILS
 fun Long.toFormattedDate(): String {
     val dateFormat = SimpleDateFormat("dd/MM/yyyy 'às' HH:mm", Locale.getDefault())
     return dateFormat.format(Date(this))

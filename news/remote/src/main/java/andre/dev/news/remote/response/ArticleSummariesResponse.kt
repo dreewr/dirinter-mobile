@@ -1,5 +1,6 @@
 package andre.dev.news.remote.response
 
+import andre.dev.news.domain.model.Article
 import andre.dev.news.domain.model.ArticleSummary
 import com.google.gson.annotations.SerializedName
 
@@ -13,8 +14,8 @@ data class ArticleResponse(
     @SerializedName("title") val title: String,
     @SerializedName("publishingTimestamp") val publishingTimestamp: Long,
     @SerializedName("thumbnailUrl") val thumbnailUrl: String,
-    @SerializedName("content") val content: String?,
-    @SerializedName("lastEditTimestamp") val lastEditTimestamp: Long?
+    @SerializedName("content") val content: String,
+    @SerializedName("lastEditTimestamp") val lastEditTimestamp: Long
 )
 
 data class ArticleSummaryResponse(
@@ -23,6 +24,16 @@ data class ArticleSummaryResponse(
     @SerializedName("publishingTimestamp") val publishingTimestamp: Long,
     @SerializedName("thumbnailUrl") var thumbnailUrl: String
 )
+
+fun ArticleResponse.toArticle() = Article(
+        id = id,
+        author = author,
+        title = title,
+        content = content,
+        thumbnailUrl = thumbnailUrl,
+        publishingTimestamp = publishingTimestamp,
+        lastEditTimestamp = lastEditTimestamp
+    )
 
 fun ArticleSummaryResponse.toArticle() = ArticleSummary(
     id = id,

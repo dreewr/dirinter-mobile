@@ -2,6 +2,7 @@ package andre.dev.presentation.model
 
 import andre.dev.news.domain.model.ArticleSummary
 
+/*TODO:USE MAPPERS*/
 data class ArticleSummaryView(
     val id: String,
     val title: String,
