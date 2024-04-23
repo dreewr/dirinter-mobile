@@ -7,8 +7,9 @@ import andre.dev.news.cache.LoginDatabase
 import andre.dev.news.data.LoginCacheSource
 import andre.dev.news.data.LoginRemoteSource
 import andre.dev.news.data.LoginRepositoryImpl
-import andre.dev.news.domain.ExecuteLoginUseCase
+import andre.dev.news.domain.interactor.ExecuteLoginUseCase
 import andre.dev.news.domain.LoginRepository
+import andre.dev.news.domain.interactor.GetLoggedUserUseCase
 import andre.dev.news.remote.LoginRemoteSourceImpl
 import andre.dev.news.remote.LoginService
 import andre.dev.news.remote.LoginServiceFactory
@@ -47,8 +48,13 @@ abstract class LoginModule {
     companion object {
 
         @Provides
-        fun provideExecuteLoginUseCase(repository: LoginRepositoryImpl) = ExecuteLoginUseCase { p1, p2 ->
+        fun provideExecuteLoginUseCase(repository: LoginRepository) = ExecuteLoginUseCase { p1, p2 ->
             repository.executeLogin(p1, p2)
+        }
+
+        @Provides
+        fun provideGetUserUseCase(repository: LoginRepository) = GetLoggedUserUseCase {
+            repository.getLoggedUser()
         }
 
         @Provides

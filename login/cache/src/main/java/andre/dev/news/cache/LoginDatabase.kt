@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [UserEntity::class], version = 1, exportSchema = false)
 abstract class LoginDatabase : RoomDatabase() {
-    abstract fun loginDao(): LoginDao
+    abstract fun loginDao(): UserDao
 
     companion object {
         fun getInstance(context: Context): LoginDatabase =

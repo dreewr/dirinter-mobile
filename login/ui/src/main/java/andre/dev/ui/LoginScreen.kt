@@ -36,7 +36,7 @@ fun LoginScreen(
     viewModelProvider: ViewModelProvider.Factory
 ) {
     val viewModel: LoginViewModel = viewModel(factory = viewModelProvider)
-    val loginState by viewModel.uiState.collectAsState(null)
+    val loginState by viewModel.loginState.collectAsState(null)
 
     Column(
         modifier = Modifier

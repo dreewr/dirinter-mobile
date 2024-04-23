@@ -11,5 +11,5 @@ class NewsRemoteSourceImpl @Inject constructor(
     override suspend fun fetchArticles(startTimestamp: Long, pageSize: Int) =
         service.getArticles(startTimestamp, pageSize).articles.map { it.toArticle() }
 
-    override suspend fun getArticleById(id: String): Article = service.getArticle(id)
+    override suspend fun getArticleById(id: String): Article = service.getArticle(id).toArticle()
 }

@@ -9,10 +9,12 @@ class LoginRepositoryImpl @Inject constructor(
     private val cacheSource: LoginCacheSource,
     private val remoteSource: LoginRemoteSource
 ) : LoginRepository {
-    override suspend fun executeLogin(id: String, password: String): User {
 
-        //TODO: COLOCAR CACHE
-        return remoteSource.executeLogin(id, password)
-    }
+    override suspend fun executeLogin(id: String, password: String) =
+        remoteSource.executeLogin(id, password).apply {
+            cacheSource.saveUser(this)
+        }
+
+    override suspend fun getLoggedUser(): User? = cacheSource.getUser()
 
 }
