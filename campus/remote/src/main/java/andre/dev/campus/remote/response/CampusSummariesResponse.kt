@@ -1,14 +1,12 @@
-package andre.dev.news.remote.response
+package andre.dev.campus.remote.response
 
-import andre.dev.news.domain.model.Article
-import andre.dev.news.domain.model.ArticleSummary
 import com.google.gson.annotations.SerializedName
 
 data class ArticleSummariesResponse(
     val articles: List<ArticleSummaryResponse>
 )
 
-data class ArticleResponse(
+data class CampusResponse(
     @SerializedName("id") val id: String,
     @SerializedName("author") val author: String,
     @SerializedName("title") val title: String,
@@ -25,19 +23,19 @@ data class ArticleSummaryResponse(
     @SerializedName("thumbnailUrl") var thumbnailUrl: String
 )
 
-fun ArticleResponse.toArticle() = Article(
-        id = id,
-        author = author,
-        title = title,
-        content = content,
-        thumbnailUrl = thumbnailUrl,
-        publishingTimestamp = publishingTimestamp,
-        lastEditTimestamp = lastEditTimestamp
-    )
-
-fun ArticleSummaryResponse.toArticle() = ArticleSummary(
-    id = id,
-    title = title,
-    thumbnailUrl = thumbnailUrl,
-    publishingTimestamp = publishingTimestamp
-)
+//fun ArticleResponse.toArticle() = Article(
+//        id = id,
+//        author = author,
+//        title = title,
+//        content = content,
+//        thumbnailUrl = thumbnailUrl,
+//        publishingTimestamp = publishingTimestamp,
+//        lastEditTimestamp = lastEditTimestamp
+//    )
+//
+//fun ArticleSummaryResponse.toArticle() = ArticleSummary(
+//    id = id,
+//    title = title,
+//    thumbnailUrl = thumbnailUrl,
+//    publishingTimestamp = publishingTimestamp
+//)

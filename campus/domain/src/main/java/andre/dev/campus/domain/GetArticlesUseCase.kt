@@ -1,6 +1,6 @@
-package andre.dev.news.domain
+package andre.dev.campus.domain
 
-import andre.dev.news.domain.model.CampusSummary
+import andre.dev.campus.domain.model.CampusSummary
 
 fun interface GetArticlesUseCase {
     suspend fun getArticles(startTimestamp: Long, pageSize: Int): List<CampusSummary>

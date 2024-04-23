@@ -1,2 +1,0 @@
-package andre.dev.news.domain
-interface CampusRepository: GetArticlesUseCase, GetArticleByIdUseCase

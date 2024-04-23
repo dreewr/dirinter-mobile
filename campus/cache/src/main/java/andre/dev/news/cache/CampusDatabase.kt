@@ -1,13 +1,13 @@
 package andre.dev.news.cache
 
-import andre.dev.news.model.ArticleEntity
-import andre.dev.news.model.ArticleSummaryEntity
+import andre.dev.news.model.CampusEntity
+import andre.dev.news.model.CampusSummaryEntity
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ArticleSummaryEntity::class, ArticleEntity::class], version = 1, exportSchema = false)
+@Database(entities = [CampusSummaryEntity::class, CampusEntity::class], version = 1, exportSchema = false)
 abstract class CampusDatabase : RoomDatabase() {
     abstract fun newsDao(): CampusDao
 

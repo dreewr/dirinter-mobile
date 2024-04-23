@@ -1,7 +1,7 @@
 package andre.dev.ui
 
 import andre.dev.lib.State
-import andre.dev.presentation.NewsDetailsViewModel
+import andre.dev.presentation.CampusDetailsViewModel
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -31,7 +31,7 @@ import coil.request.ImageRequest
 
 @Composable
 fun NewsDetailsScreen(newsId: String, viewModelProvider: ViewModelProvider.Factory) {
-    val viewModel: NewsDetailsViewModel = viewModel(factory = viewModelProvider)
+    val viewModel: CampusDetailsViewModel = viewModel(factory = viewModelProvider)
     val state by viewModel.uiState.collectAsState()
 
     LaunchedEffect(newsId) {
@@ -48,37 +48,7 @@ fun NewsDetailsScreen(newsId: String, viewModelProvider: ViewModelProvider.Facto
         }
 
         is State.Success -> {
-            val article = (state as State.Success).data
-            LazyColumn(modifier = Modifier.padding(horizontal = 24.dp)) {
-                item {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(article.thumbnailUrl)
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(8.dp))
-                            .aspectRatio(16f / 9f),
-                        contentScale = ContentScale.Crop
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
 
-                    Text(text = article.title, style = MaterialTheme.typography.headlineLarge)
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(
-                        text = article.publishingDetails,
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(text = article.content, style = MaterialTheme.typography.bodyMedium)
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
-            }
         }
 
         is State.Failure -> RetryMessage(message = "Tente novamente.") {

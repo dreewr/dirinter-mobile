@@ -1,4 +1,4 @@
-package andre.dev.news.remote
+package andre.dev.campus.remote
 
 import andre.dev.core.network.ServiceFactory
 

@@ -7,7 +7,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [NewsModule::class])
+@Component(modules = [CampusModule::class])
 interface CampusComponent {
     // Your component methods
 

@@ -1,5 +1,6 @@
 package andre.dev.campus
 
+import andre.dev.lib.ViewModelFactory
 import andre.dev.ui.CampusDependencyProvider
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject

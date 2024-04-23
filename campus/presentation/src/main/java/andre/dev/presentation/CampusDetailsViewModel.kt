@@ -1,8 +1,8 @@
 package andre.dev.presentation
 
 import andre.dev.lib.State
-import andre.dev.news.domain.GetArticleByIdUseCase
-import andre.dev.presentation.model.ArticleView
+import andre.dev.campus.domain.GetArticleByIdUseCase
+import andre.dev.presentation.model.CampusView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,24 +15,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CampusDetailsViewModel @Inject constructor(
-    private val getArticleById: GetArticleByIdUseCase,
+//    private val getArticleById: GetArticleByIdUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<State<ArticleView>>(State.Loading())
+    private val _uiState = MutableStateFlow<State<CampusView>>(State.Loading())
 
     val uiState = _uiState.asStateFlow()
 
     fun fetchArticle(newsId: String) {
-        viewModelScope.launch(dispatcher) {
-            flow {
-                emit(getArticleById.getArticle(newsId))
-            }.onStart {
-                _uiState.value = State.Loading()
-            }.catch {
-                _uiState.value = State.Failure()
-            }.collect { article ->
-                _uiState.value = State.Success(ArticleView(article))
-            }
-        }
+//        viewModelScope.launch(dispatcher) {
+//            flow {
+//                emit(getArticleById.getArticle(newsId))
+//            }.onStart {
+//                _uiState.value = State.Loading()
+//            }.catch {
+//                _uiState.value = State.Failure()
+//            }.collect { article ->
+//                _uiState.value = State.Failure()
+//            }
+//        }
     }
 }

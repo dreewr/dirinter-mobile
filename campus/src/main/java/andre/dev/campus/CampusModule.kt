@@ -7,12 +7,12 @@ import andre.dev.news.cache.CampusDatabase
 import andre.dev.news.data.CampusCacheSource
 import andre.dev.news.data.CampusRemoteSource
 import andre.dev.news.data.CampusRepositoryImpl
-import andre.dev.news.domain.CampusRepository
-import andre.dev.news.domain.GetArticleByIdUseCase
-import andre.dev.news.domain.GetArticlesUseCase
-import andre.dev.news.remote.CampusRemoteSourceImpl
-import andre.dev.news.remote.CampusService
-import andre.dev.news.remote.CampusServiceFactory
+import andre.dev.campus.domain.CampusRepository
+import andre.dev.campus.domain.GetArticleByIdUseCase
+import andre.dev.campus.domain.GetArticlesUseCase
+import andre.dev.campus.remote.CampusRemoteSourceImpl
+import andre.dev.campus.remote.CampusService
+import andre.dev.campus.remote.CampusServiceFactory
 import andre.dev.presentation.CampusDetailsViewModel
 import andre.dev.presentation.CampusViewModel
 import android.content.Context
@@ -54,15 +54,15 @@ abstract class CampusModule {
 
     companion object {
 
-        @Provides
-        fun provideGetArticleByIdUseCase(repository: CampusRepositoryImpl) = GetArticleByIdUseCase { p1 ->
-            repository.getArticle(p1)
-        }
-
-        @Provides
-        fun provideGetArticlesUseCase(repository: CampusRepositoryImpl) = GetArticlesUseCase { p1, p2 ->
-            repository.getArticles(p1, p2)
-        }
+//        @Provides
+//        fun provideGetArticleByIdUseCase(repository: CampusRepositoryImpl) = GetArticleByIdUseCase { p1 ->
+//
+//        }
+//
+//        @Provides
+//        fun provideGetArticlesUseCase(repository: CampusRepositoryImpl) = GetArticlesUseCase { p1, p2 ->
+//            repository.getArticles(p1, p2)
+//        }
 
         @Provides
         fun providesDispatcher(): CoroutineDispatcher = Dispatchers.IO
