@@ -1,13 +1,12 @@
-package andre.dev.news
+package andre.dev.campus
 
-import andre.dev.ui.NewsDependencyProvider
+import andre.dev.ui.CampusDependencyProvider
 import androidx.lifecycle.ViewModel
-import andre.dev.lib.ViewModelFactory
 import javax.inject.Inject
 
-class NewsDependencyProviderImpl @Inject constructor(
+class CampusDependencyProviderImpl @Inject constructor(
     private val viewModelFactory: ViewModelFactory
-) : NewsDependencyProvider {
+) : CampusDependencyProvider {
     override fun <T : ViewModel> getViewModel(modelClass: Class<T>): T =
         viewModelFactory.create(modelClass)
 }

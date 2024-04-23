@@ -25,7 +25,7 @@ import dagger.multibindings.IntoMap
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
-import kotlin.reflect.KClass
+import andre.dev.lib.ViewModelFactory
 
 
 
