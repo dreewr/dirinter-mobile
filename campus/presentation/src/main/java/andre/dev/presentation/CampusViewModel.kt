@@ -33,7 +33,6 @@ class CampusViewModel @Inject constructor(
             }.catch {
                 _uiState.value = State.Failure()
             }.collect { campi ->
-                delay(4000)
                 _uiState.value = State.Success(campi)
             }
         }

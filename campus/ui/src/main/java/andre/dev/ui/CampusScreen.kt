@@ -45,44 +45,14 @@ fun CampusScreen(
     LazyColumn(modifier = Modifier.fillMaxSize(), state = lazyListState) {
         item {
             when (val currentState = state) {
-                is State.Loading -> LoadingContent(Modifier.fillParentMaxSize())
+                is State.Loading -> Loading(Modifier.fillParentMaxSize())
 
-                is State.Failure -> ErrorContent(
-                    Modifier.fillParentMaxSize(),
-                    errorMessage = "An error occurred",
-                    onRetry = {
-                        viewModel.fetchCampi()
-                    })
-
+                is State.Failure -> RetryMessage {
+                    viewModel.fetchCampi()
+                }
                 is State.Success -> {
                     SuccessContent(campuses = currentState.data, onAction = onAction)
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun LoadingContent(modifier: Modifier) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
-fun ErrorContent(modifier: Modifier, errorMessage: String, onRetry: () -> Unit) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = errorMessage)
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = onRetry) {
-                Text(text = "Retry")
             }
         }
     }
@@ -102,7 +72,7 @@ fun CampusItem(campus: CampusSummary, onAction: (CampusAction) -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onAction(CampusAction.CampusSelected(campus.id)) }
+            .clickable { onAction(CampusAction.CampusSelected(campus.id, campus.name)) }
             .padding(16.dp)
     ) {
         Text(

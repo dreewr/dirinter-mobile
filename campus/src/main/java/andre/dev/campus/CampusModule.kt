@@ -15,6 +15,7 @@ import andre.dev.news.data.CampusRepositoryImpl
 import andre.dev.presentation.CampusDetailsViewModel
 import andre.dev.presentation.CampusViewModel
 import android.content.Context
+import androidx.compose.ui.text.intl.Locale
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
