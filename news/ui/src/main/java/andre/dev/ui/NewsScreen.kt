@@ -57,7 +57,7 @@ fun NewsScreen(
             ArticleItem(article = article,
                 showDivider = index < pagingState.loadedNews.size - 1,
                 onItemClick = {
-                    onAction(NewsAction.OnNewsSelected(article.id))
+                    onAction(NewsAction.NewsSelected(article.id))
                 })
         }
 

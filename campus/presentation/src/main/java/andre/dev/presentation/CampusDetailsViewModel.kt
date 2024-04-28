@@ -1,21 +1,16 @@
 package andre.dev.presentation
 
+import andre.dev.campus.domain.GetCampiUseCase
 import andre.dev.lib.State
-import andre.dev.campus.domain.GetArticleByIdUseCase
 import andre.dev.presentation.model.CampusView
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CampusDetailsViewModel @Inject constructor(
-//    private val getArticleById: GetArticleByIdUseCase,
+    //private val getArticleById: GetCampiUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<State<CampusView>>(State.Loading())

@@ -1,7 +1,8 @@
-package andre.dev.news.data
+package andre.dev.campus.domain
 
 import andre.dev.campus.domain.model.CampusSummary
 
-interface CampusRemoteSource {
+fun interface GetCampiUseCase {
     suspend fun getCampi(): List<CampusSummary>
+
 }

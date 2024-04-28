@@ -1,5 +1,5 @@
 package andre.dev.ui
 
 sealed class CampusAction {
-    data class OnCampusSelected(val id: String) : CampusAction()
+    data class CampusSelected(val id: String) : CampusAction()
 }

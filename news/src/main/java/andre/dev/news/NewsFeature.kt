@@ -18,11 +18,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavType
-import androidx.navigation.navArgument
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 
 @Composable
 fun NewsFeature() {
@@ -45,7 +45,7 @@ fun NewsFeature() {
                     viewModelProvider = viewModelProviderFactory,
                     onAction = { action ->
                         when (action) {
-                            is NewsAction.OnNewsSelected -> {
+                            is NewsAction.NewsSelected -> {
                                 navController.navigate("newsDetail/${action.id}")
                             }
                         }

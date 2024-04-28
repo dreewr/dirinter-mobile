@@ -16,10 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 
 @Composable
 fun CampusFeature() {
@@ -29,25 +31,37 @@ fun CampusFeature() {
 
     Scaffold(
         topBar = {
-           CampusToolbar(navController = navController)
+            CampusToolbar(navController = navController)
         }
-    ) { paddingValues->
+    ) { paddingValues ->
 
         NavHost(
             navController = navController,
-            startDestination = "newsList",
-            modifier = Modifier.padding(paddingValues)) {
-            composable("newsList") {
+            startDestination = "campusList",
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            composable("campusList") {
                 CampusScreen(
                     viewModelProvider = viewModelProviderFactory,
                     onAction = { action ->
                         when (action) {
-                            is CampusAction.OnCampusSelected -> {
-                                navController.navigate("newsDetail/${action.id}")
+                            is CampusAction.CampusSelected -> {
+                                navController.navigate("campusDetail/${action.id}")
                             }
                         }
                     }
                 )
+            }
+
+            composable(
+                route = "campusDetail/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val newsId = backStackEntry.arguments?.getString("id")
+
+                newsId?.let {
+                    Text(text = newsId)
+                }
             }
         }
     }
@@ -61,10 +75,12 @@ fun CampusToolbar(navController: NavController) {
 
     TopAppBar(
         title = {
-            Text(text = when (currentRoute) {
-                "newsList" -> "DIRINTER Mobile"
-                else -> String()
-            })
+            Text(
+                text = when (currentRoute) {
+                    "campusList" -> "Selecione um campus"
+                    else -> String()
+                }
+            )
         },
         navigationIcon = {
             if (navController.previousBackStackEntry != null) {

@@ -1,5 +1,5 @@
 package andre.dev.ui
 
 sealed class LoginAction {
-    data class OnLoginSuccessful(val id: String) : LoginAction()
+    data class LoginSuccessful(val id: String) : LoginAction()
 }

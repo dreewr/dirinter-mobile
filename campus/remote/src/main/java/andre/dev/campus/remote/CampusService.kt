@@ -1,12 +1,9 @@
 package andre.dev.campus.remote
 
+import andre.dev.campus.remote.response.CampiResponse
+import retrofit2.http.GET
+
 interface CampusService {
-//    @GET("news")
-//    suspend fun getArticles(
-//        @Query("startTimestamp") startTimestamp: Long,
-//        @Query("pageSize") pageSize:Int
-//    ): ArticleSummariesResponse
-//
-//    @GET("news/{id}")
-//    suspend fun getArticle(@Path("id") id: String): ArticleResponse
+    @GET("campus")
+    suspend fun getCampi(): CampiResponse
 }

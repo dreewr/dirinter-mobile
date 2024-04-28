@@ -44,7 +44,7 @@ fun LoginFeature() {
                     viewModelProvider = viewModelProviderFactory,
                     onAction = { action ->
                         when (action) {
-                            is LoginAction.OnLoginSuccessful -> {
+                            is LoginAction.LoginSuccessful -> {
                                 Log.d("TESTE", "TESTE")//navController.navigate("newsDetail/${action.id}")
                             }
                         }

@@ -1,5 +1,5 @@
 package andre.dev.ui
 
 sealed class NewsAction {
-    data class OnNewsSelected(val id: String) : NewsAction()
+    data class NewsSelected(val id: String) : NewsAction()
 }

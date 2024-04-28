@@ -94,6 +94,6 @@ fun LoginScreen(
     }
 
     LaunchedEffect(loginState) {
-        if (loginState is State.Success) onAction.invoke(LoginAction.OnLoginSuccessful("ID" /*passar o user*/))
+        if (loginState is State.Success) onAction.invoke(LoginAction.LoginSuccessful("ID" /*passar o user*/))
     }
 }
