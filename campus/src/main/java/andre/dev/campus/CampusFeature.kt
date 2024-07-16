@@ -71,7 +71,7 @@ fun CampusToolbar(navController: NavController) {
         Text(
             text = when (currentRoute) {
                 "campusList" -> "Selecione um campus"
-                "campusDetail/{id}/{name}" -> ("Campus" + currentBackStackEntry?.arguments?.getString(
+                "campusDetail/{id}/{name}" -> ("Campus "+  currentBackStackEntry?.arguments?.getString(
                     "name"
                 ))
                 else -> String()

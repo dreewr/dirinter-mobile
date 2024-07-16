@@ -1,7 +1,7 @@
 package andre.dev.campus
 
-import andre.dev.campus.domain.CampusRepository
-import andre.dev.campus.domain.GetCampiUseCase
+import andre.dev.campus.interactor.GetCampiUseCase
+import andre.dev.campus.interactor.GetCampusUseCase
 import andre.dev.campus.remote.CampusRemoteSourceImpl
 import andre.dev.campus.remote.CampusService
 import andre.dev.campus.remote.CampusServiceFactory
@@ -15,7 +15,6 @@ import andre.dev.news.data.CampusRepositoryImpl
 import andre.dev.presentation.CampusDetailsViewModel
 import andre.dev.presentation.CampusViewModel
 import android.content.Context
-import androidx.compose.ui.text.intl.Locale
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
@@ -57,6 +56,10 @@ abstract class CampusModule {
         @Provides
         fun provideGetCampiUseCase(repository: CampusRepository) =
             GetCampiUseCase { repository.getCampi() }
+
+        @Provides
+        fun provideGetCampusUseCase(repository: CampusRepository) =
+            GetCampusUseCase { p1 -> repository.getCampus(p1) }
 
         @Provides
         fun providesDispatcher(): CoroutineDispatcher = Dispatchers.IO

@@ -1,7 +1,8 @@
 package andre.dev.campus.remote
 
-import andre.dev.campus.domain.model.CampusSummary
-import andre.dev.campus.remote.response.toCampusSummary
+import andre.dev.campus.model.Campus
+import andre.dev.campus.model.CampusSummary
+import andre.dev.campus.remote.response.toDomainModel
 import andre.dev.news.data.CampusRemoteSource
 import javax.inject.Inject
 
@@ -10,6 +11,10 @@ class CampusRemoteSourceImpl @Inject constructor(
 ) : CampusRemoteSource {
 
     override suspend fun getCampi(): List<CampusSummary> = service.getCampi().campi.map {
-        it.toCampusSummary()
+        it.toDomainModel()
     }
+
+    override suspend fun getCampus(id: String): Campus =
+        service.getCampus(id).toDomainModel()
+
 }

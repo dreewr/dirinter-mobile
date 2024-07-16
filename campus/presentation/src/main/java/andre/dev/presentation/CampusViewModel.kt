@@ -1,12 +1,11 @@
 package andre.dev.presentation
 
-import andre.dev.campus.domain.GetCampiUseCase
-import andre.dev.campus.domain.model.CampusSummary
+import andre.dev.campus.interactor.GetCampiUseCase
+import andre.dev.campus.model.CampusSummary
 import andre.dev.lib.State
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch

@@ -1,8 +1,10 @@
 package andre.dev.presentation
 
-import andre.dev.campus.domain.GetCampiUseCase
+import andre.dev.campus.interactor.GetCampusUseCase
+import andre.dev.campus.model.Campus
 import andre.dev.lib.State
-import andre.dev.presentation.model.CampusView
+import andre.dev.presentation.model.CampusUiModel
+import andre.dev.presentation.model.toUiModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,23 +18,23 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CampusDetailsViewModel @Inject constructor(
-    //private val getArticleById: GetCampiUseCase,   //Get Campus details
+    private val getCampusUseCase: GetCampusUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<State<String>>(State.Loading())
+    private val _uiState = MutableStateFlow<State<CampusUiModel>>(State.Loading())
     val uiState = _uiState.asStateFlow()
 
-    fun fetchArticle(newsId: String) {
+    fun getCampus(campusId: String) {
         viewModelScope.launch(dispatcher) {
             flow {
-                emit(/*getArticleById.getArticle(newsId)*/ "a")
+                emit(getCampusUseCase.getCampus(campusId))
             }.onStart {
                 _uiState.value = State.Loading()
             }.catch {
                 _uiState.value = State.Failure()
-            }.collect { article ->
-                delay(4000)
-                _uiState.value = State.Success(article)
+            }.collect { campus ->
+                delay(1000)
+                _uiState.value = State.Success(campus.toUiModel())
             }
         }
     }

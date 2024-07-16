@@ -1,7 +1,8 @@
 package andre.dev.news.data
 
-import andre.dev.campus.domain.CampusRepository
-import andre.dev.campus.domain.model.CampusSummary
+import andre.dev.campus.CampusRepository
+import andre.dev.campus.model.Campus
+import andre.dev.campus.model.CampusSummary
 import javax.inject.Inject
 
 class CampusRepositoryImpl @Inject constructor(
@@ -13,4 +14,12 @@ class CampusRepositoryImpl @Inject constructor(
             cacheSource.insertAll(it)
         }
     }
+
+    override suspend fun getCampus(id: String): Campus {
+        return remoteSource.getCampus(id)
+    }
+
+//    override suspend fun getCampus(id: String): Campus = cacheSource.getCampus(id).also {
+//
+//    }
 }

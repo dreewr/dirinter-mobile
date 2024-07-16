@@ -1,6 +1,6 @@
 package andre.dev.news.model
 
-import andre.dev.campus.domain.model.CampusSummary
+import andre.dev.campus.model.CampusSummary
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

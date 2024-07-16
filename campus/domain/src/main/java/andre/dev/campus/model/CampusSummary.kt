@@ -1,4 +1,4 @@
-package andre.dev.campus.domain.model
+package andre.dev.campus.model
 
 data class CampusSummary(
     val id: String,

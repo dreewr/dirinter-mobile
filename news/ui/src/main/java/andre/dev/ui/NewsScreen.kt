@@ -104,19 +104,7 @@ fun ArticleItem(
         .clickable { onItemClick(article.id) }
         .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 24.dp)
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(article.thumbnailUrl)
-                .crossfade(true)
-                .memoryCachePolicy(CachePolicy.ENABLED)
-                .diskCachePolicy(CachePolicy.ENABLED)
-                .build(),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))
-                .aspectRatio(4f / 2f),
-            contentScale = ContentScale.Crop)
+        RemoteImage(imageUrl = article.thumbnailUrl)
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = article.title,

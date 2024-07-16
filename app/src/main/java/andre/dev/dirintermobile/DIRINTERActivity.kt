@@ -1,7 +1,6 @@
 package andre.dev.dirintermobile
 
 import andre.dev.campus.CampusFeature
-import andre.dev.news.LoginFeature
 import andre.dev.news.NewsFeature
 import andre.dev.news.ui.theme.DIRINTERMobileTheme
 import android.os.Bundle
@@ -10,7 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -18,14 +17,12 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import java.util.Locale
 
 class DIRINTERActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +33,8 @@ class DIRINTERActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val items = listOf("Home", "Dashboard", "Notifications")
+                    val navController = rememberNavController()
+                    val items = listOf("News", "Campus", "Dashboard")
                     var selectedItem by remember { mutableStateOf(0) }
 
                     Scaffold(
@@ -45,27 +43,35 @@ class DIRINTERActivity : ComponentActivity() {
                                 items.forEachIndexed { index, item ->
                                     NavigationBarItem(
                                         icon = {
-                                            Icon(
-                                                Icons.Filled.Home,
-                                                contentDescription = null
-                                            )
+                                            when (item) {
+                                                "News" -> Icon(Icons.Filled.Home, contentDescription = "News")
+                                                "Campus" -> Icon(Icons.Filled.LocationOn, contentDescription = "Campus")
+                                                "Dashboard" -> Icon(Icons.Filled.Notifications, contentDescription = "Dashboard")
+                                                else -> Icon(Icons.Filled.Warning, contentDescription = "Unknown")
+                                            }
                                         },
                                         label = { Text(item) },
                                         selected = selectedItem == index,
-                                        onClick = { selectedItem = index }
+                                        onClick = {
+                                            selectedItem = index
+                                            navController.navigate(item.lowercase(Locale.ROOT)) {
+                                                popUpTo(navController.graph.startDestinationId)
+                                                launchSingleTop = true
+                                            }
+                                        }
                                     )
                                 }
                             }
                         }
                     ) { innerPadding ->
-                        val currentNavController = rememberNavController()
                         NavHost(
-                            navController = currentNavController,
-                            startDestination = "campus",
+                            navController = navController,
+                            startDestination = "news",
                             modifier = Modifier.padding(innerPadding)
                         ) {
-                            //composable("main") { NewsFeature() }
+                            composable("news") { NewsFeature() }
                             composable("campus") { CampusFeature() }
+                            composable("dashboard") { Text("Dashboard Content") }
                         }
                     }
                 }
