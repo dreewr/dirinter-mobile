@@ -35,6 +35,7 @@ android {
 dependencies {
 
     implementation(project(":campus:domain"))
+    implementation(project(":core:presentation"))
 
     implementation(project(":core"))
 

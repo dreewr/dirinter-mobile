@@ -49,11 +49,9 @@ dependencies {
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
 
+    implementation(project(":core:presentation"))
 
-    //
-
-
-    //todo: adjust
+    //adjust
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")

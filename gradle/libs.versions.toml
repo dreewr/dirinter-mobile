@@ -84,6 +84,7 @@ room-runtime= { module = "androidx.room:room-runtime", version.ref = "roomVersio
 room-compiler= { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
 room-ktx= { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version = "2.7.7" }
+material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
 
 [bundles]
 
