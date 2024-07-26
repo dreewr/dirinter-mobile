@@ -60,8 +60,9 @@ dependencies {
 
     //////
     implementation(libs.bundles.dagger)
-    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(project(":core:presentation"))
     kapt(libs.dagger.compiler)
+    implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.room.runtime)
     implementation(libs.bundles.compose)
 

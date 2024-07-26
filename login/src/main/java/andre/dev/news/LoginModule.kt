@@ -57,9 +57,6 @@ abstract class LoginModule {
             repository.getLoggedUser()
         }
 
-        @Provides
-        fun providesDispatcher(): CoroutineDispatcher = Dispatchers.IO
-
         @Singleton
         @Provides
         fun providesService(): LoginService = LoginServiceFactory().getServiceFactory()
