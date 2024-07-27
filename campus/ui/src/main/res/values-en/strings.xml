@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="bachelor">Bachelor</string>
+    <string name="technology">Technology</string>
+    <string name="licentiate">Licentiate</string>
+    <string name="masters">Masters</string>
+    <string name="doctorate">Doctorate</string>
+    <string name="masters_doctorate">Masters/Doctorate</string>
+    <string name="specialization">Specialization</string>
+    <string name="foreign_languages">Foreign Languages</string>
+    <string name="graduation">Graduation</string>
+</resources>

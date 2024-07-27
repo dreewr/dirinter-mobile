@@ -1,6 +1,5 @@
 package andre.dev.dirintermobile
 
-import andre.dev.ResourceProviderImpl
 import andre.dev.campus.CampusModuleInitializer
 import andre.dev.news.LoginModuleInitializer
 import andre.dev.news.NewsModuleInitializer
@@ -23,15 +22,10 @@ class Application : Application() {
 
     private fun initializeModules(
         vararg initializers: (
-            Context, CoroutineDispatcher, ResourceProviderImpl
+            Context, CoroutineDispatcher
         ) -> Unit
-    ) {
-        initializers.forEach { initializer ->
-            initializer(
-                this,
-                Dispatchers.IO,
-                ResourceProviderImpl(this)
-            )
-        }
+    ) = initializers.forEach { initializer ->
+        initializer(this, Dispatchers.IO)
     }
+
 }

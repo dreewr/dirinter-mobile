@@ -45,7 +45,7 @@ fun LoginFeature() {
                     onAction = { action ->
                         when (action) {
                             is LoginAction.LoginSuccessful -> {
-                                Log.d("TESTE", "TESTE")//navController.navigate("newsDetail/${action.id}")
+                                navController.navigate("newsDetail/${action.id}")
                             }
                         }
                     }

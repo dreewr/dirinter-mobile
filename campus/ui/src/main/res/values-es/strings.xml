@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="bachelor">Licenciatura</string>
+    <string name="technology">Tecnología</string>
+    <string name="licentiate">Licenciatura</string>
+    <string name="masters">Maestría</string>
+    <string name="doctorate">Doctorado</string>
+    <string name="masters_doctorate">Maestría/Doctorado</string>
+    <string name="specialization">Especialización</string>
+    <string name="foreign_languages">Idiomas Extranjeros</string>
+    <string name="graduation">Graduación</string>
+
+</resources>

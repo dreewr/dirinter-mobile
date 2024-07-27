@@ -1,6 +1,5 @@
 package andre.dev.news
 
-import andre.dev.presentation.ResourceProvider
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import dagger.BindsInstance
@@ -18,8 +17,6 @@ interface LoginComponent {
         fun applicationContext(applicationContext: Context): Builder
         @BindsInstance
         fun dispatcher(dispatcher: CoroutineDispatcher): Builder
-        @BindsInstance
-        fun resourceProvider(resourcesProvider: ResourceProvider): Builder
 
         fun build(): LoginComponent
     }

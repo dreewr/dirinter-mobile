@@ -1,6 +1,5 @@
 package andre.dev.news
 
-import andre.dev.presentation.ResourceProvider
 import android.content.Context
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -9,13 +8,10 @@ object NewsModuleInitializer {
 
     fun init(
         applicationContext: Context,
-        dispatcher: CoroutineDispatcher,
-        resourceProvider: ResourceProvider
-    ) {
+        dispatcher: CoroutineDispatcher) {
         newsComponent = DaggerNewsComponent.builder()
             .applicationContext(applicationContext)
             .dispatcher(dispatcher)
-            .resourceProvider(resourceProvider)
             .build()
     }
 

@@ -1,6 +1,5 @@
 package andre.dev.campus.model
 
-// Domain Model Classes
 data class Campus(
     val id: Int,
     val name: String,
@@ -15,12 +14,34 @@ data class Branch(
     val postalCode: String,
     val city: String,
     val country: String,
-    val email: String,
-    val phone: String,
-    val courses: List<String>,
+    val courseSections: List<CourseSection>,
     val contacts: List<Contact>,
-    val sectors: List<Sector>,
-    val imageUrl: String
+    val imageUrl: String,
+    val buildings: List<Building>,
+    val markers: List<Marker>
+)
+
+data class Marker(
+    val type: MarkerType,
+    val name: String,
+    val color: MarkerColor
+) {
+    enum class MarkerType {
+        ACCESS_PEDESTRIAN,
+        ACCESS_VEHICLE,
+        PASSAGEWAY
+    }
+
+    enum class MarkerColor {
+        BLUE,
+        RED,
+        GREEN
+    }
+}
+
+data class Building(
+    val name: String,
+    val pointsOfInterest: List<String>
 )
 
 data class Contact(
@@ -29,18 +50,3 @@ data class Contact(
     val email: String,
     val phoneNumber: String
 )
-
-data class Sector(
-    val name: String,
-    val description: String,
-    val pointsOfInterest: List<PointOfInterest>
-)
-
-data class PointOfInterest(
-    val id: Int,
-    val name: String,
-    val type: String,
-    val description: String
-)
-
-

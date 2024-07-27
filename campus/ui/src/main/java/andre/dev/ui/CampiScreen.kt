@@ -71,7 +71,7 @@ fun CampusItem(campus: CampusSummary, onAction: (CampusAction) -> Unit) {
         Text(
             text = campus.name,
             modifier = Modifier.weight(1f),
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.labelLarge
         )
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,

@@ -66,9 +66,6 @@ abstract class NewsModule {
             repository.getArticles(p1, p2)
         }
 
-        @Provides
-        fun providesDispatcher(): CoroutineDispatcher = Dispatchers.IO
-
         @Singleton
         @Provides
         fun providesService(): NewsService = NewsServiceFactory().getServiceFactory()

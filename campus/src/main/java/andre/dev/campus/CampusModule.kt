@@ -61,9 +61,6 @@ abstract class CampusModule {
         fun provideGetCampusUseCase(repository: CampusRepository) =
             GetCampusUseCase { p1 -> repository.getCampus(p1) }
 
-        @Provides
-        fun providesDispatcher(): CoroutineDispatcher = Dispatchers.IO
-
         @Singleton
         @Provides
         fun providesService(): CampusService = CampusServiceFactory().getServiceFactory()

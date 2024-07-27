@@ -3,6 +3,7 @@ package andre.dev.presentation
 import andre.dev.campus.interactor.GetCampiUseCase
 import andre.dev.campus.model.CampusSummary
 import andre.dev.lib.State
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,8 +15,16 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
+//TODO: EXPLICAÇÃO TEÓRICA
+
+//uiState vs _uiState --> encapsulation, immutability, controlled modification
+//https://youtu.be/EuBXe-ZZMWE?t=326
+
+
 class CampusViewModel @Inject constructor(
-    private val getCampiUseCase: GetCampiUseCase, private val dispatcher: CoroutineDispatcher
+    private val getCampiUseCase: GetCampiUseCase,
+    private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<State<List<CampusSummary>>>(State.Loading())
     val uiState = _uiState.asStateFlow()
@@ -23,6 +32,7 @@ class CampusViewModel @Inject constructor(
     init {
         fetchCampi()
     }
+
     fun fetchCampi() {
         viewModelScope.launch(dispatcher) {
             flow {

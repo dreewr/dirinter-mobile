@@ -17,7 +17,7 @@ import coil.request.ImageRequest
 fun RemoteImage(imageUrl: String) {
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(imageUrl)
+             .data(imageUrl)
             .crossfade(true)
             .memoryCachePolicy(CachePolicy.ENABLED)
             .diskCachePolicy(CachePolicy.ENABLED)

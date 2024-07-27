@@ -1,6 +1,5 @@
 package andre.dev.campus
 
-import andre.dev.presentation.ResourceProvider
 import android.content.Context
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -10,14 +9,12 @@ object CampusModuleInitializer {
     fun init(
         applicationContext: Context,
         dispatcher: CoroutineDispatcher,
-        resourceProvider: ResourceProvider
     ) {
 
         campusComponent = DaggerCampusComponent
             .builder()
             .dispatcher(dispatcher)
             .applicationContext(applicationContext)
-            .resourceProvider(resourceProvider)
             .build()
     }
 
